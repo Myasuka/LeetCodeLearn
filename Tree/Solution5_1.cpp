@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -139,6 +140,8 @@ struct NodeLevel{
 public:
     NodeLevel(TreeNode *n, int l): node(n), level(l) {};
 };
+
+
 // Binary Tree Level Order Traversal, Accepted
 vector<vector<int>> Solution5_1::levelOrder(TreeNode *root) {
     int level = 1;
@@ -196,3 +199,99 @@ vector<vector<int>> Solution5_1::levelOrderQueue(TreeNode *root) {
     }
     return result;
 }
+
+// Binary Tree Level Order Traversal II, Accepted
+vector<vector<int>> Solution5_1::levelOrderReverse(TreeNode *root) {
+    vector<vector<int>> result;
+    queue<TreeNode *> q;
+    queue<int> qlevel;
+    TreeNode *p = root;
+    int level = 1;
+    if (p != nullptr){
+        q.push(p);
+        qlevel.push(level);
+    }else return result;
+    while (! q.empty()){
+        p = q.front();
+        level = qlevel.front();
+        if (level > result.size()){
+            result.push_back(vector<int>());
+        }
+        result[level -1].push_back(p->value);
+        if (p->left != nullptr){
+            q.push(p->left);
+            qlevel.push(level + 1);
+        }
+        if (p->right != nullptr){
+            q.push(p->right);
+            qlevel.push(level + 1);
+        }
+        q.pop();
+        qlevel.pop();
+    }
+    reverse(result.begin(), result.end());
+    return result;
+}
+
+// Binary Tree Zigzag Level Order Traversal, Accepted
+vector<vector<int>> Solution5_1::zigzagLevelOrder(TreeNode *root) {
+    vector<vector<int>> result;
+    stack<TreeNode *> s;
+    stack<int> sLevel;
+    TreeNode *p = root;
+    int level = 1;
+    if (p != nullptr) {
+        s.push(p);
+        sLevel.push(level);
+    }
+    while(! s.empty()){
+        p = s.top();
+        level = sLevel.top();
+        s.pop();
+        sLevel.pop();
+        if(level > result.size()){
+            result.push_back(vector<int>());
+        }
+        result[level - 1].push_back(p->value);
+        if(p->left != nullptr){
+            s.push(p->left);
+            sLevel.push(level + 1);
+        }
+        if (p->right != nullptr){
+            s.push(p->right);
+            sLevel.push(level + 1);
+        }
+    }
+    for (int i=2; i< result.size(); i += 2){
+        reverse(result[i].begin(), result[i].end());
+    }
+    return result;
+}
+
+bool isSymmetric(TreeNode *left, TreeNode *right){
+    if (left == nullptr && right == nullptr) return true;
+    if ((left!=nullptr)^(right!=nullptr)) return false;
+    return (left->value == right->value) && isSymmetric(left->left, right->right)
+           && isSymmetric(left->right, right->left);
+}
+
+bool Solution5_1::isSymmetric(TreeNode *root) {
+    if (root == nullptr) return true;
+    return isSymmetric(root->left, root->right);
+}
+
+int degree(TreeNode *p){
+    if (p == nullptr) return 0;
+    if ((p->left == nullptr) && (p->right == nullptr)) return 1;
+    int le = degree(p->left);
+    int ri = degree(p->right);
+    if (le < 0 || ri < 0 || abs(le - ri) > 1) return -1;
+    return max(le, ri) + 1;
+}
+
+bool Solution5_1::isBalanced(TreeNode *root) {
+    if (root == nullptr) return true;
+    return degree(root) >= 0;
+}
+
+

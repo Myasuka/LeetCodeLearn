@@ -27,6 +27,10 @@ public:
     void levelOrderRecurive(TreeNode *root, int level, vector<vector<int>> &result);
     vector<vector<int>> levelOrder(TreeNode *root);
     vector<vector<int>> levelOrderQueue(TreeNode *root);
+    vector<vector<int>> levelOrderReverse(TreeNode *root);
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root);
+    bool isSymmetric(TreeNode *root);
+    bool isBalanced(TreeNode *root);
 
 };
 #endif //TREE_SOLUTION5_1_H
