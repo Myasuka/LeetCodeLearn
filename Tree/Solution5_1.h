@@ -26,6 +26,7 @@ public:
     void preOrderRecurive(TreeNode *root, vector<int> &result);
     void levelOrderRecurive(TreeNode *root, int level, vector<vector<int>> &result);
     vector<vector<int>> levelOrder(TreeNode *root);
+    vector<vector<int>> levelOrderQueue(TreeNode *root);
 
 };
 #endif //TREE_SOLUTION5_1_H

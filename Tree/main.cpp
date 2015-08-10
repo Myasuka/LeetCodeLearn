@@ -39,7 +39,7 @@ int main() {
 //    }
 //    cout << endl;
 
-    vector<vector<int>> levelResult = s->levelOrder(root);
+    vector<vector<int>> levelResult = s->levelOrderQueue(root);
     cout << "levelResult size: " << levelResult.size() << endl;
     for (int i = 0; i < levelResult.size(); i++) {
         for (int j = 0; j < levelResult[i].size(); j++) {

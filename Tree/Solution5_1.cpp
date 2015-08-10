@@ -5,6 +5,7 @@
 #include "Solution5_1.h"
 #include <iostream>
 #include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -138,7 +139,7 @@ struct NodeLevel{
 public:
     NodeLevel(TreeNode *n, int l): node(n), level(l) {};
 };
-
+// Binary Tree Level Order Traversal, Accepted
 vector<vector<int>> Solution5_1::levelOrder(TreeNode *root) {
     int level = 1;
     vector<vector<int>> result;
@@ -160,6 +161,38 @@ vector<vector<int>> Solution5_1::levelOrder(TreeNode *root) {
             p = p->right;
             ++ level;
         }
+    }
+    return result;
+}
+
+// Binary Tree Level Order Traversal, Accepted
+vector<vector<int>> Solution5_1::levelOrderQueue(TreeNode *root) {
+    vector<vector<int>> result;
+    queue<TreeNode *> q;
+    queue<int> qlevel;
+    int level = 1;
+    TreeNode *p = root;
+    if (p != nullptr) {
+        q.push(p);
+        qlevel.push(level);
+    }else return result;
+    while(!q.empty()){
+        p = q.front();
+        level = qlevel.front();
+        if (level > result.size()) {
+            result.push_back(vector<int>());
+        }
+        result[level - 1].push_back(p->value);
+        if (p->left != nullptr) {
+            q.push(p->left);
+            qlevel.push(level + 1);
+        }
+        if (p->right != nullptr) {
+            q.push(p->right);
+            qlevel.push(level + 1);
+        }
+        q.pop();
+        qlevel.pop();
     }
     return result;
 }
