@@ -268,16 +268,16 @@ vector<vector<int>> Solution5_1::zigzagLevelOrder(TreeNode *root) {
     return result;
 }
 
-bool isSymmetric(TreeNode *left, TreeNode *right){
+bool iSymmetric(TreeNode *left, TreeNode *right){
     if (left == nullptr && right == nullptr) return true;
     if ((left!=nullptr)^(right!=nullptr)) return false;
-    return (left->value == right->value) && isSymmetric(left->left, right->right)
-           && isSymmetric(left->right, right->left);
+    return (left->value == right->value) && iSymmetric(left->left, right->right)
+           && iSymmetric(left->right, right->left);
 }
 
 bool Solution5_1::isSymmetric(TreeNode *root) {
     if (root == nullptr) return true;
-    return isSymmetric(root->left, root->right);
+    return iSymmetric(root->left, root->right);
 }
 
 int degree(TreeNode *p){
@@ -292,6 +292,81 @@ int degree(TreeNode *p){
 bool Solution5_1::isBalanced(TreeNode *root) {
     if (root == nullptr) return true;
     return degree(root) >= 0;
+}
+
+
+// Construct Binary Tree from Preorder and Inorder Traversal, accepted
+TreeNode *buildTree1(Iterator pre_first, Iterator pre_last,
+                    Iterator in_first, Iterator in_last){
+    if (pre_first == pre_last) return nullptr;
+    TreeNode *root;
+    if ((pre_last - pre_first) == 1){
+        root = new TreeNode(*pre_first);
+        return root;
+    }
+    root = new TreeNode(*pre_first);
+    auto it = find(in_first, in_last, root->value);
+    int pos = distance(in_first, it);
+    root->left = buildTree1(pre_first + 1, pre_first + pos + 1, in_first, in_first + pos);
+    root->right = buildTree1(pre_first + pos + 1, pre_last, in_first + pos + 1, in_last);
+    return root;
+}
+
+TreeNode *buildTree2(Iterator in_first, Iterator in_last, Iterator post_first, Iterator post_last){
+    if (in_first == in_last) return nullptr;
+    TreeNode *root;
+    if (in_last - in_first == 1){
+        root = new TreeNode(*in_first);
+        return root;
+    }
+    root = new TreeNode(*(post_last - 1));
+    auto it = find(in_first, in_last, *(post_last - 1));
+    int pos = distance(in_first, it);
+    root->left = buildTree2(in_first, in_first + pos , post_first, post_first + pos);
+    root->right = buildTree2(in_first + pos + 1, in_last, post_first + pos, post_last - 1);
+    return root;
+}
+
+TreeNode *Solution5_1::buildTreePreIn(vector<int> &preorder, vector<int> &inorder) {
+    return buildTree1(begin(preorder), end(preorder), begin(inorder), end(inorder));
+}
+
+
+TreeNode *Solution5_1::buildTreeInPost(vector<int> &inorder, vector<int> &postorder) {
+    return buildTree2(begin(inorder), end(inorder), begin(postorder), end(postorder));
+}
+
+vector<TreeNode*> generate(int start, int end){
+    vector<TreeNode*> subTrees;
+    if(start > end) {
+        subTrees.push_back(nullptr);
+        return subTrees;
+    }
+    for(int i=start; i<=end; i++){
+        vector<TreeNode*> leftSubs = generate(start, i-1);
+        vector<TreeNode*> rightSubs = generate(i+1, end);
+        for(auto l: leftSubs){
+            for(auto r: rightSubs){
+                TreeNode *root = new TreeNode(i);
+                root->left = l;
+                root->right = r;
+                subTrees.push_back(root);
+            }
+        }
+    }
+    return subTrees;
+}
+vector<TreeNode *> Solution5_1::generateTree(int n) {
+    return generate(1, n);
+}
+
+int minDepth(TreeNode *root, bool hasBrother) {
+    if(root == nullptr) return hasBrother? INT_MAX: 0;
+    return 1 + min(minDepth(root->left, root->right != nullptr), minDepth(root->right, root->left != nullptr));
+}
+
+int Solution5_1::minDepth(TreeNode *root) {
+    return minDepth(root, false);
 }
 
 

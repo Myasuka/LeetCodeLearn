@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm>
+#include <limits.h>
 
 using namespace std;
 
@@ -39,13 +41,30 @@ int main() {
 //    }
 //    cout << endl;
 
-    vector<vector<int>> levelResult = s->levelOrderQueue(root);
-    cout << "levelResult size: " << levelResult.size() << endl;
-    for (int i = 0; i < levelResult.size(); i++) {
-        for (int j = 0; j < levelResult[i].size(); j++) {
-            cout << levelResult[i][j] << ",";
-        }
-        cout << endl;
+//    vector<vector<int>> levelResult = s->levelOrderQueue(root);
+//    cout << "levelResult size: " << levelResult.size() << endl;
+//    for (int i = 0; i < levelResult.size(); i++) {
+//        for (int j = 0; j < levelResult[i].size(); j++) {
+//            cout << levelResult[i][j] << ",";
+//        }
+//        cout << endl;
+//    }
+    vector<int> v = {1,2 ,3, 4, 5,6, 7, 8};
+    vector<int> w = {1,2 ,3, 4, 5,6, 7, 8};
+    cout <<w.end() - v.begin()<<endl;
+    auto it = next(v.begin(), 4);
+    auto t = *it;
+    while(t){
+        cout<<t<<" "<<endl;
+        t = *(++it);
     }
+
+    vector<int> f(10, 9);
+    for(int i=0;i<f.size();i++){
+        cout<< f[i] <<" "<<endl;
+    }
+    cout<< INT_MAX <<endl;
     return 0;
+
+
 }
