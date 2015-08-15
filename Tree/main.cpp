@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <map>
 
 using namespace std;
 
@@ -39,13 +40,42 @@ int main() {
 //    }
 //    cout << endl;
 
-    vector<vector<int>> levelResult = s->levelOrderQueue(root);
-    cout << "levelResult size: " << levelResult.size() << endl;
-    for (int i = 0; i < levelResult.size(); i++) {
-        for (int j = 0; j < levelResult[i].size(); j++) {
-            cout << levelResult[i][j] << ",";
-        }
-        cout << endl;
+//    vector<vector<int>> levelResult = s->levelOrderQueue(root);
+//    cout << "levelResult size: " << levelResult.size() << endl;
+//    for (int i = 0; i < levelResult.size(); i++) {
+//        for (int j = 0; j < levelResult[i].size(); j++) {
+//            cout << levelResult[i][j] << ",";
+//        }
+//        cout << endl;
+//    }
+
+    multimap<int, int> result;
+    result.insert(pair<int,int>(1, 10));
+    result.insert(pair<int,int>(1, 11));
+    result.insert(pair<int,int>(2, 11));
+    result.insert(pair<int,int>(3, 15));
+    // use 'find' and 'count'
+    auto iter1 = result.find(1);
+    int cnt = result.count(1);
+    cout << "method 1" << endl;
+    for(int i =0; i< cnt; i++){
+        cout << iter1->first << ", " << iter1->second << endl;
+        ++ iter1;
+    }
+
+    // use lower_bound and upper_bound
+    cout << "method 2" << endl;
+    auto iter2low = result.lower_bound(1);
+    auto iter2upp = result.upper_bound(1);
+    for(auto i = iter2low; i != iter2upp; i ++){
+        cout << i->first << ", " << i->second << endl;
+    }
+
+    // use equal_range
+    cout << "method 3" << endl;
+    auto pairiter3 = result.equal_range(1);
+    for(auto i = pairiter3.first; i != pairiter3.second; i++){
+        cout << i->first << ", " << i->second << endl;
     }
     return 0;
 }

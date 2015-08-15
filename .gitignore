@@ -44,3 +44,9 @@ Temporary Items
 
 # IDE
 .idea
+.clang
+.codelite
+Debug
+Release
+*.mk
+main.cpp

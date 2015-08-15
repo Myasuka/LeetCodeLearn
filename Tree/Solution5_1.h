@@ -32,5 +32,8 @@ public:
     bool isSymmetric(TreeNode *root);
     bool isBalanced(TreeNode *root);
 
+private:
+    bool isSymmetric(TreeNode *left, TreeNode *right);
+
 };
 #endif //TREE_SOLUTION5_1_H
