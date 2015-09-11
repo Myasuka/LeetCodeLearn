@@ -268,7 +268,8 @@ vector<vector<int>> Solution5_1::zigzagLevelOrder(TreeNode *root) {
     return result;
 }
 
-bool iSymmetric(TreeNode *left, TreeNode *right){
+
+bool Solution5_1::isSymmetric(TreeNode *left, TreeNode *right){
     if (left == nullptr && right == nullptr) return true;
     if ((left!=nullptr)^(right!=nullptr)) return false;
     return (left->value == right->value) && iSymmetric(left->left, right->right)

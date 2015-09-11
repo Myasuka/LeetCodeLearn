@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <unistd.h>
 
+
 using namespace std;
 
 
@@ -203,89 +204,35 @@ int main() {
 //        }
 //        cout << endl;
 //    }
-//    vector<int> v = {1,2 ,3, 4, 5,6, 7, 8};
-//    vector<int> w = {1,2 ,3, 4, 5,6, 7, 8};
-//    cout <<w.end() - v.begin()<<endl;
-//    auto it = next(v.begin(), 4);
-//    auto t = *it;
-//    while(t){
-//        cout<<t<<" "<<endl;
-//        t = *(++it);
-//    }
-//
-//    vector<int> f(10, 9);
-//    for(int i=0;i<f.size();i++){
-//        cout<< f[i] <<" "<<endl;
-//    }
-//    cout<< INT_MAX <<endl;
 
-//    cout<<"before array" << endl;
-////    int *arr = new int[100000000];
-////    int arr[1000];
-//    vector<int> arr = vector<int>(100000000, 0);
-//    cout<<"after array" << endl;
-//    cout << arr.size() << endl;
-//    cout<< arr[0] << endl;
-//    string a = "12345";
-//    string::npos;
-//    a.insert(a.begin(), '0');
-//    cout << a << endl;
-//    cout<< a << endl;
 
-//    ListNode *head = new ListNode(1);
-//    head->next = new ListNode(2);
-//    head->next->next = new ListNode(3);
-//    ListNode *p = head;
-//    ListNode *result = new ListNode(0);
-//    while(p){
-//        ListNode *tmp = p;
-//        p = p->next;
-//        tmp->next = result->next;
-//        result->next = tmp;
-//    }
-//    result = result->next;
-//    while(result){
-//        cout << result->val << ",";
-//        result = result->next;
-//    }
-//    cout << endl;
-//    while(head){
-//        cout << head->val << ",";
-//        head = head->next;
-//    }
-//    cout << endl;
+    multimap<int, int> result;
+    result.insert(pair<int,int>(1, 10));
+    result.insert(pair<int,int>(1, 11));
+    result.insert(pair<int,int>(2, 11));
+    result.insert(pair<int,int>(3, 15));
+    // use 'find' and 'count'
+    auto iter1 = result.find(1);
+    int cnt = result.count(1);
+    cout << "method 1" << endl;
+    for(int i =0; i< cnt; i++){
+        cout << iter1->first << ", " << iter1->second << endl;
+        ++ iter1;
+    }
 
-//    int a[6] = {3, 2, 1, 4, 6, 5};
-//    set<int> s(a, a+6);
-//    unordered_set<int> hs(a, a+6);
-//    for(int i:s){
-//        cout<< i << ", ";
-//    }
-//    cout << endl;
-//    for(int i:hs){
-//        cout<< i << "; ";
-//    }
-//    cout << endl;
-//    if(hs.find(3)!=hs.end())
-//        cout<< distance(hs.begin(), hs.find(3)) <<endl;
-//    else cout<< "Not Found"<<endl;
-//    cout << distance(s.begin(), s.find(10))<< endl;
-//    return 0;
+    // use lower_bound and upper_bound
+    cout << "method 2" << endl;
+    auto iter2low = result.lower_bound(1);
+    auto iter2upp = result.upper_bound(1);
+    for(auto i = iter2low; i != iter2upp; i ++){
+        cout << i->first << ", " << i->second << endl;
+    }
 
-//    vector<int> v{4, 2, 4, 1, 5, 10};
-//    priority_queue<int> q(std::less<int>(), v);
-//    for(int i: v) cout << i << ", ";
-//    cout<< endl;
-//    cout << q.top() << endl;
-//    make_heap(v.begin(), v.end(), greater<int>());
-//    for(int i: v) cout << i << ", ";
-//    cout<< endl;
-//    v.front() = 7;
-//    make_heap(v.begin(), v.end(),  greater<int>());
-//    for(int i: v) cout << i << ", ";
-//    cout<< endl;
-//    sort_heap(v.begin(), v.end());
-//    for(int i: v) cout << i << ", ";
-//    cout<< endl;
-
+    // use equal_range
+    cout << "method 3" << endl;
+    auto pairiter3 = result.equal_range(1);
+    for(auto i = pairiter3.first; i != pairiter3.second; i++){
+        cout << i->first << ", " << i->second << endl;
+    }
+    return 0;
 }

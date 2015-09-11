@@ -54,6 +54,8 @@ public:
     int minDepth(TreeNode* root);
 
 private:
-    int minDepth(TreeNode *root, bool hasBrother);
+
+    bool isSymmetric(TreeNode *left, TreeNode *right);
+
 };
 #endif //TREE_SOLUTION5_1_H
