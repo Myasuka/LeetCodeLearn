@@ -53,7 +53,7 @@ public:
     // Minimum Depth of Binary Tree
     int minDepth(TreeNode* root);
 
-
-    //int minDepth(TreeNode *root, bool hasBrother);
+private:
+    int minDepth(TreeNode *root, bool hasBrother);
 };
 #endif //TREE_SOLUTION5_1_H

@@ -360,7 +360,7 @@ vector<TreeNode *> Solution5_1::generateTree(int n) {
     return generate(1, n);
 }
 
-int minDepth(TreeNode *root, bool hasBrother) {
+int Solution5_1::minDepth(TreeNode *root, bool hasBrother) {
     if(root == nullptr) return hasBrother? INT_MAX: 0;
     return 1 + min(minDepth(root->left, root->right != nullptr), minDepth(root->right, root->left != nullptr));
 }
